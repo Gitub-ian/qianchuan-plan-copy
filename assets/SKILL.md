@@ -2,7 +2,7 @@
 
 > **资源位置**：本技能的资源基目录下有 `scripts/`（cdp.mjs、gen-batch11.mjs、pick-all.mjs、start-qc.cmd）与 `references/`（完整手册、界面结构、弹窗处理、浏览器会话）。下文出现的 `scripts/xxx.mjs` 都相对这个基目录；截图与记录可以写到任意工作目录，建议统一放一个 `qc/` 目录。
 >
-> **运行环境**：Windows + Microsoft Edge（`--remote-debugging-port=9222`）+ Node 18+，脚本零第三方依赖。
+> **运行环境**：Windows 或 macOS；Microsoft Edge / Google Chrome 任一（用 `--remote-debugging-port=9222` 开调试端口）；Node 18+，脚本零第三方依赖。**不要假设用户用的是哪个浏览器、哪个 profile、哪个千川账户**——1.1 和 1.2 会先探测再动手。
 
 按本文件逐步执行，不需要重新探索界面。**所有坐标都是 CSS 像素**（截图坐标 ÷ devicePixelRatio）。
 
@@ -18,31 +18,52 @@
 
 ## 1. 前置检查（每次开工先做，30 秒）
 
-### 1.1 浏览器连得上吗
+### 1.1 浏览器连得上吗（先探测，不要假设）
 
 ```bash
 curl -s http://127.0.0.1:9222/json/version
 ```
 
-- 返回 `Browser: Edg/...` → 正常
-- 连不上 → 启动 Edge（**必须提权/非沙箱，否则报 `mojo ... 拒绝访问 (0x5)`**）：
+- 返回 `Browser: Edg/...` 或 `Chrome/...` → 已可用，直接进入 1.2
+- **连不上**时按下面顺序处理，不要默认"一定是 Edge 在某个固定路径"：
+
+1. 先问用户一句：**"你平时用哪个浏览器登千川？我可以用 Edge 或 Chrome。"**
+2. 常见安装位置（Windows）：
+   - `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`
+   - `C:/Program Files/Microsoft/Edge/Application/msedge.exe`
+   - `C:/Program Files/Google/Chrome/Application/chrome.exe`
+   - `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`
+   - `%LOCALAPPDATA%/Google/Chrome/Application/chrome.exe`
+
+   macOS：`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`、`/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge`
+3. 启动（`<BROWSER>` 换成上一步找到的路径，`<PROFILE_DIR>` **优先复用用户已经登录过千川的那个 profile 目录**）：
 
 ```bash
-( nohup "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" \
+( nohup "<BROWSER>" \
   --remote-debugging-port=9222 --remote-allow-origins=* \
-  --user-data-dir="F:\AI办公\qc\edge-profile" \
+  --user-data-dir="<PROFILE_DIR>" \
   --no-first-run --no-default-browser-check --start-maximized \
-  "https://qianchuan.jinritemai.com/login" >/tmp/edge.log 2>&1 & )
+  "https://qianchuan.jinritemai.com/login" >/tmp/browser.log 2>&1 & )
 ```
 
-启动命令会挂住不返回，属正常；**绝对不要 job_kill 这个后台任务**——会杀掉整棵进程树的 Edge。
-也可以让用户双击 `scripts/start-qc.cmd`。
+启动命令会挂住不返回，属正常；**绝对不要 job_kill 这个后台任务**——会杀掉整棵进程树的浏览器。
 
-### 1.2 登录态与账户
+- 启动不了（报 `mojo ... 拒绝访问 (0x5)`、被沙箱拦、或用户机器上没有可用的浏览器）：**把命令原文发给用户，让他自己执行**，不要反复重试、不要自己造一个新 profile。
+- ⚠️ 用别人的机器时，**不知道他哪个 profile 登录过千川**。宁可先问，也不要新建 profile 让他白扫码。
 
-登录页若停在「选择账户」列表，用 JS click 点含「市场部短视频挂车」的叶子元素（搜索框 setter 无效）。
-进入后 URL 应含 `aavid=1860422794525708`。
+### 1.2 登录态与账户（没登录就停下来问人）
 
+打开 `https://qianchuan.jinritemai.com` 后先读一屏文本，再决定动作：
+
+| 页面状态 | 处理 |
+|---|---|
+| 二维码 / 手机号 / 验证码登录页 | **停**。告诉用户"请在浏览器里扫码或登录千川，好了告诉我"，然后等回复，不要尝试自己登录 |
+| 停在「选择账户」列表 | 用 JS click 点目标账户名的叶子元素（搜索框 setter 无效）；只有一个账户就直接点它 |
+| 已进入后台（URL 带 `aavid=`） | 继续 |
+
+- **账户 ID 不要写死**：从 URL 的 `aavid=` 读出当前账户 ID 并记下，后续所有 URL 都用它。
+- 用户没指定账户时问一句"要操作哪个千川账户？"；他给了名称就按名称点，没给就用列表里唯一那个并复述确认。
+- 进入后核对页面上显示的账户名；对不上就退回重选。
 ### 1.3 量一次坐标（屏幕/缩放变了就必须重做）
 
 ```js
