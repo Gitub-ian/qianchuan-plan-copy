@@ -52,11 +52,11 @@
       "versions": [
         {
           "version": "1.0.0",
-          "publishTimestamp": 1794967751,
+          "publishTimestamp": 1794972292,
           "source": {
             "type": "git",
             "url": "https://github.com/Gitub-ian/qianchuan-plan-copy",
-            "commit": "05ca8e2b4b96ba61740fe79b8af455818d553e48"
+            "commit": "353f57b2c430bfc18853a7b8594b1c18e1f048ca"
           },
           "engines": {}
         }
