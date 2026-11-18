@@ -1,0 +1,4 @@
+- insert:
+    - id: qianchuan-plan-copy
+      name: 'qianchuan-plan-copy'
+      config: {}
