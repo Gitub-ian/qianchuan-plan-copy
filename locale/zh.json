@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "千川计划复制",
+    "description": "复制巨量千川「乘方」计划：搜索确认唯一 → 抓参数 → 用户确认 → 删除 → 按参数重建 → 逐抖音号全选素材。安装后新增 qianchuan-plan-copy 技能，内含 Edge/CDP 脚本。",
+    "detail": "docs/DETAIL.md"
+  }
+}
