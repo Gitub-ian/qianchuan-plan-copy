@@ -25,10 +25,19 @@ https://<你的 GitHub 用户>.github.io/qianchuan-plan-copy/index.json
 ### 方式二：直接安装本仓库
 
 ```
-plugin_manager(action="install_bundle", target="github:<user>/qianchuan-plan-copy")
+plugin_manager(action="install_bundle", target="github:Gitub-ian/qianchuan-plan-copy")
 ```
 
-或把仓库克隆到本地目录后，在 **Plugins → Add plugin** 里选择该目录。
+### 方式三：离线（git 拉不动时用这个）
+
+有些机器的 git/curl 走 Windows schannel，会报 `schannel: AcquireCredentialsHandle failed: SEC_E_NO_CREDENTIALS`，此时方式二会失败。改用：
+
+1. 浏览器打开 https://github.com/Gitub-ian/qianchuan-plan-copy → **Code → Download ZIP**
+2. 解压到任意目录，例如 `D:\dsh-plugins\qianchuan-plan-copy`
+3. ```
+   plugin_manager(action="install_bundle", target="D:\\dsh-plugins\\qianchuan-plan-copy")
+   ```
+   或在 **Plugins → Add plugin** 里选这个目录
 
 安装后新建一个会话，技能列表里应出现 `qianchuan-plan-copy`。
 
