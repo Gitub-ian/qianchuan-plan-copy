@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "title": {
+    "zh": "千川计划复制",
+    "en": "Qianchuan plan copy"
+  },
+  "description": {
+    "zh": "复制巨量千川「乘方-推商品-自选商品」计划：搜索确认唯一 → 抓参数 → 确认删除 → 按参数重建 → 逐抖音号全选素材。安装后新增 qianchuan-plan-copy 技能，内含 Edge/CDP 脚本。",
+    "en": "Copies 巨量千川 乘方 plans: search, capture parameters, confirm, delete, rebuild, then re-attach materials. Adds the qianchuan-plan-copy skill with CDP scripts for Edge."
+  },
+  "metadata": {
+    "categories": {
+      "tool": {
+        "title": {
+          "zh": "效率工具",
+          "en": "Productivity"
+        }
+      }
+    },
+    "labels": {},
+    "sortKeys": {}
+  },
+  "plugins": [
+    {
+      "name": "qianchuan-plan-copy",
+      "title": {
+        "zh": "千川计划复制",
+        "en": "Qianchuan plan copy"
+      },
+      "description": {
+        "zh": "复制巨量千川「乘方-推商品-自选商品」计划：搜索确认唯一 → 抓参数 → 确认删除 → 按参数重建 → 逐抖音号全选素材。安装后新增 qianchuan-plan-copy 技能，内含 Edge/CDP 脚本。",
+        "en": "Copies 巨量千川 乘方 plans: search, capture parameters, confirm, delete, rebuild, then re-attach materials. Adds the qianchuan-plan-copy skill with CDP scripts for Edge."
+      },
+      "icon": "icon.svg",
+      "author": "Gitub-ian",
+      "homepage": "https://github.com/Gitub-ian/qianchuan-plan-copy",
+      "repository": {
+        "url": "https://github.com/Gitub-ian/qianchuan-plan-copy"
+      },
+      "metadata": {
+        "category": "tool",
+        "keywords": [
+          "千川",
+          "巨量千川",
+          "广告计划",
+          "qianchuan",
+          "plan-copy"
+        ],
+        "labels": [],
+        "sortKeys": {}
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "publishTimestamp": 1794967751,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Gitub-ian/qianchuan-plan-copy",
+            "commit": "05ca8e2b4b96ba61740fe79b8af455818d553e48"
+          },
+          "engines": {}
+        }
+      ]
+    }
+  ]
+}
