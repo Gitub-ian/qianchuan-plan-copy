@@ -1,0 +1,28 @@
+{
+  "name": "qianchuan-plan-copy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "DSH skill provider for copying 巨量千川 乘方 plans (search → capture → confirm → delete → rebuild → materials).",
+  "license": "MIT",
+  "keywords": ["dsh", "dsh-plugin", "skill", "qianchuan", "千川"],
+  "exports": {
+    ".": "./lib/index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "files": [
+    "lib",
+    "assets",
+    "cordis.patch.yml",
+    "locale",
+    "icon.svg",
+    "README.md",
+    "docs"
+  ]
+}
