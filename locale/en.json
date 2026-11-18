@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Qianchuan plan copy",
+    "description": "Copies 巨量千川 乘方 plans: search, capture parameters, confirm, delete, rebuild, then re-attach materials. Adds the qianchuan-plan-copy skill with CDP scripts for Edge.",
+    "detail": "docs/DETAIL.md"
+  }
+}
